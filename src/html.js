@@ -18,6 +18,7 @@ export default class HTML extends React.Component {
             sizes="180x180"
           />
           <link href="/img/favicon.ico" rel="icon" type="image/x-icon" />
+          <title>my profile</title>
         </head>
         <body>
           <div

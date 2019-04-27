@@ -2,34 +2,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import React from 'react'
 
-import {
-  faApple,
-  faAws,
-  faFacebook,
-  faGithub,
-  faHtml5,
-  faJs,
-  faNode,
-  faPhp,
-  faReact,
-  faTwitter,
-  faVuejs,
-} from '@fortawesome/free-brands-svg-icons'
+import * as icons from '@fortawesome/free-brands-svg-icons'
+
 import './style.scss'
 
-library.add(
-  faApple,
-  faAws,
-  faFacebook,
-  faGithub,
-  faHtml5,
-  faJs,
-  faNode,
-  faPhp,
-  faReact,
-  faTwitter,
-  faVuejs
-)
+const iconNames = icons.constructor.keys(icons)
+
+iconNames.forEach(iconName => {
+  const currentIcon = icons[iconName]
+  if (currentIcon.icon) {
+    library.add(currentIcon)
+  }
+})
 
 const Icon = ({ name }) => (
   <div className="icon" title={name}>

@@ -1,14 +1,57 @@
+const { buildClientSchema } = require('graphql')
+
+const loadEnvFromJson = fileName => {
+  if (!process.env.DOCKER) {
+    const jsonData = require(`${fileName}`)
+
+    const keys = Object.keys(jsonData)
+
+    keys.forEach(key => {
+      if (!process.env.hasOwnProperty(key)) {
+        process.env[key] = jsonData[key]
+      } else {
+        console.log(`${key} already defined, not overwriting!`)
+      }
+    })
+  }
+}
+
+loadEnvFromJson('./.env.json')
+
+const createSchema = async () => {
+  const json = require('./github.json')
+  console.log(json)
+  return buildClientSchema(json.data)
+}
+
 module.exports = {
   siteMetadata: {
-    title: 'Gatstrap',
-    description: 'Gatsby starter for bootstrap a blog',
-    siteUrl: 'https://gatstrap.netlify.com',
-    author: 'jaxx2104',
-    twitter: 'jaxx2104',
+    title: 'jstacoder',
+    description: 'Jstacoders developer profile',
+    siteUrl: 'https://jstacoder.github.io',
+    author: 'jstacoder',
+    twitter: 'amigodornot666',
+    github: 'jstacoder',
     adsense: '',
   },
   pathPrefix: '/',
   plugins: [
+    {
+      resolve: 'gatsby-source-graphql',
+      options: {
+        fieldName: 'github',
+        typeName: 'Github',
+        url: 'https://api.github.com/graphql',
+        headers: {
+          Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
+        },
+        createSchema,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-styled-components',
+      options: {},
+    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -21,6 +64,13 @@ module.exports = {
       options: {
         path: `${__dirname}/content/images/`,
         name: 'images',
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        path: `${__dirname}/content/data/`,
+        name: 'data',
       },
     },
     {

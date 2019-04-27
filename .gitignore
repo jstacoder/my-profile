@@ -5,3 +5,5 @@ public
 .intermediate-representation/
 .cache/
 .vscode/
+.env
+.idea/*

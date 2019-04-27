@@ -2,10 +2,10 @@ import { graphql } from 'gatsby'
 import get from 'lodash/get'
 import React from 'react'
 
-import Post from 'templates/Post'
-import Meta from 'components/Meta'
-import Layout from 'components/Layout'
-import Page from 'templates/Page'
+import Post from './Post'
+import Meta from '../components/Meta'
+import Layout from '../components/Layout'
+import Page from './Page'
 
 const Template = ({ data, location }) => (
   <div>
@@ -14,7 +14,7 @@ const Template = ({ data, location }) => (
         title={get(data, 'post.frontmatter.title')}
         site={get(data, 'site.meta')}
       />
-      {get(data, 'post.frontmatter.layout') != 'page' ? (
+      {get(data, 'post.frontmatter.layout') !== 'page' ? (
         <Post
           data={get(data, 'post')}
           options={{
@@ -30,6 +30,7 @@ const Template = ({ data, location }) => (
 )
 export default Template
 
+// language=GraphQL
 export const pageQuery = graphql`
   query PostByPath($path: String!) {
     site {
